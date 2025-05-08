@@ -3,4 +3,207 @@
 *:before,
 *:after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 5px;
+}
+
+:root {
+  --black-color: #2b2b2b;
+  --light-black-color: #5e5e5e;
+  --white-color: #fff;
+  --blue-color: #037eaa;
+  --dark-blue-color: #0a0ecc;
+}
+
+body, main {
+  font-family: 'Roboto', Arial, serif;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+h1, h2 {
+  color: var(--black-color);
+}
+
+h2 {
+  padding-top: 2rem;
+}
+
+/*************** Header ***************/
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#top-header a {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-color);
+}
+
+.siteName {
+  font-size: 35px;
+  font-weight: 700;
+}
+
+#tools {
+  font-style: italic;
+}
+
+/*************** Navigation ***************/
+
+nav ul{
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--black-color);
+}
+
+nav ul li {
+  color: var(--white-color);
+  background-color: var(--black-color);
+  padding: .75rem;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  background-color: var(--light-black-color);
+  border-radius: 5px;
+}
+
+/*************** Hero ***************/
+
+.hero {
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-card {
+  color: var(--blue-color);
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 15px;
+  border-radius: 8px;
+  max-width: 60%;
+}
+
+.hero-card h3 {
+  font-weight: 700;
+}
+
+.hero-card p {
+  margin: 2px 0;
+}
+
+.hero-card img {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 120px;
+  cursor: pointer;
+}
+
+/*************** Reviews ***************/
+
+.reviews {
+  margin-top: 2rem;
+}
+
+.reviews ul {
+  padding-left: 2rem;
+}
+
+/*************** Upgrades ***************/
+
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 300px;
+}
+
+.upgrade-card-wrapper {
+  text-align: center;
+}
+
+.upgrade-cards {
+  width: 160px;
+  height: 100px;
+  background-color: var(--blue-color);
+  border: 1px solid var(--black-color);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.upgrade-cards img {
+  max-width: 80px;
+  max-height: 80px;
+  height: auto;
+  display: block;
+}
+
+.upgrade-card-wrapper a {
+  display: block;
+  margin-top: 5px;
+  color: var(--dark-blue-color);
+  text-decoration: underline;
+}
+
+@media (min-width: 850px) {
+  body {
+    background-image: url('/images/site/small_check.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  #wrapper {
+    background-color: var(--white-color);
+    border: solid 5px var(--blue-color);
+    border-radius: 10px;
+  }
+
+  .main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+  }
+
+  .hero {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+
+  .reviews {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  .upgrades {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+}
+
+@media (min-width: 550px) {
+  .main-content {
+    justify-items: center;
+  }
+
+  .reviews {
+    margin-top: 0;
+  }
 }
