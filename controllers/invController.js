@@ -35,7 +35,7 @@ invCont.buildItemDetails = async function (req, res, next) {
   })
 }
 
-triggerError = async (req, res, next) => {
+invCont.triggerError = async (req, res, next) => {
   try {
     throw new Error("Intentional server error triggered for testing.");
   } catch (err) {
@@ -43,7 +43,4 @@ triggerError = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  invCont,
-  triggerError
-}
+module.exports = invCont
