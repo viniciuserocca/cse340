@@ -19,4 +19,31 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
-module.exports = invCont
+/* ***************************
+ *  Build specific inventory item detail view
+ * ************************** */
+invCont.buildItemDetails = async function (req, res, next) {
+  const inventory_id = req.params.invId
+  const data = await invModel.getItemDetails(inventory_id)
+  const grid = await utilities.buildDetailsGrid(data)
+  let nav = await utilities.getNav()
+  const className = data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model
+  res.render("./inventory/details", {
+    title: className,
+    nav,
+    grid,
+  })
+}
+
+triggerError = async (req, res, next) => {
+  try {
+    throw new Error("Intentional server error triggered for testing.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  invCont,
+  triggerError
+}
