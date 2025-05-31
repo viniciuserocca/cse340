@@ -14,6 +14,7 @@
   --white-color: #fff;
   --blue-color: #037eaa;
   --dark-blue-color: #0a0ecc;
+  --red-color: #e2490d;
 }
 
 body, main {
@@ -83,6 +84,14 @@ nav ul li a{
 nav ul li:hover {
   background-color: var(--light-black-color);
   border-radius: 5px;
+}
+
+/*************** Flash Messages ***************/
+
+.notice {
+  font-weight: 700;
+  color: var(--red-color);
+  margin-left: 1rem;
 }
 
 /*************** Hero ***************/
@@ -248,6 +257,124 @@ nav ul li:hover {
   background-color: var(--light-gray-color);
 }
 
+/*************** Login ***************/
+
+.login-form {
+  width: 300px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: var(--blue-color);
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  color: var(--white-color);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.login-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--white-color);
+  color: var(--blue-color);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: var(--white-color);
+}
+
+.signup-text {
+  text-align: center;
+  margin-top: 15px;
+  color: var(--white-color);
+}
+
+.signup-text a {
+  color: var(--white-color);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+/*************** Register ***************/
+
+.register-form {
+  width: 300px;
+  margin: 50px auto;
+  border: 2px solid var(--black-color);
+  border-radius: 4px;
+  background-color: var(--white-color);
+  font-family: Arial, sans-serif;
+}
+
+.register-form h2 {
+  padding: .5rem 0 0 .5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.form-group input {
+  height: 40px;
+  padding: 6px 10px;
+  border: 2px solid var(--black-color);
+  border-radius: 2px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: var(--light-black-color);
+}
+
+.register-btn {
+  width: 30%;
+  padding: .9rem;
+  background-color: var(--blue-color);
+  color: var(--white-color);
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: var(--blue-color);
+}
+
+/*************** Queries ***************/
+
 @media (min-width: 550px) {
   .main-content {
     justify-items: center;
@@ -267,6 +394,12 @@ nav ul li:hover {
 
   .details-container {
     grid-template-rows: 1fr 1fr;
+  }
+
+  .login-form, 
+  .register-form
+  {
+  width: 500px;
   }
 }
 
