@@ -373,6 +373,14 @@ nav ul li:hover {
   background-color: var(--blue-color);
 }
 
+/*************** Management ***************/
+
+.management-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
 /*************** Queries ***************/
 
 @media (min-width: 550px) {

@@ -41,8 +41,38 @@ async function getItemDetails(invetory_id) {
   }
 }
 
+/* ***************************
+ *  New Classification Validation and INSERT
+ * ************************** */
+
+async function checkExistingClassification(classification_name) {
+  try {
+    const sql = "SELECT * FROM classification WHERE LOWER(classification_name) = LOWER($1)"
+    const result = await pool.query(sql, [classification_name])
+    return result.rowCount > 0
+  } catch (error) {
+    console.error("checkExistingClassification error", error)
+    return false
+  }
+}
+
+async function addNewClassification(classification_name) {
+  try {
+    const data = await pool.query(
+      `INSERT INTO public.classification (classification_name) VALUES ($1) RETURNING *`,
+      [classification_name]
+    )
+    return data.rows[0]
+  } catch (error) {
+    console.error("addNewClassification error " + error)
+    return null
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
-  getItemDetails
+  getItemDetails,
+  addNewClassification,
+  checkExistingClassification
 }

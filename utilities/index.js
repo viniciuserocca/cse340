@@ -89,6 +89,19 @@ Util.buildDetailsGrid = async function(data) {
   return grid;
 }
 
+/* **************************************
+* Build the login view HTML
+* ************************************ */
+Util.buildManagement = async function () {
+  let grid = `
+    <div class="management-container">
+      <a href="/inv/newClassification" title="New Classification">Add New Classification</a>
+      <a href="/inv/" title="New Inventory">Add New Vehicle</a>
+    </div>
+  `;
+  return grid;
+};
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
