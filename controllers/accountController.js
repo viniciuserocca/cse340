@@ -1,16 +1,15 @@
 const utilities = require("../utilities/")
 const accountModel = require("../models/account-model")
+const bcrypt = require("bcryptjs")
 
 /* ****************************************
 *  Deliver login view
 * *************************************** */
 async function buildLogin(req, res, next) {
     let nav = await utilities.getNav()
-    let grid = await utilities.buildLogin();
     res.render("account/login", {
       title: "Login",
       nav,
-      grid,
       errors: null
     })
   }
@@ -20,11 +19,9 @@ async function buildLogin(req, res, next) {
 * *************************************** */
 async function buildRegister(req, res, next) {
   let nav = await utilities.getNav()
-  let form = await utilities.buildRegister();
   res.render("account/register", {
     title: "Register",
     nav,
-    form,
     errors: null
   })
 }
@@ -34,15 +31,27 @@ async function buildRegister(req, res, next) {
 * *************************************** */
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
-  let grid = await utilities.buildLogin();
-  let form = await utilities.buildRegister();
   const { account_firstname, account_lastname, account_email, account_password } = req.body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+    })
+  }
 
   const regResult = await accountModel.registerAccount(
     account_firstname,
     account_lastname,
     account_email,
-    account_password
+    hashedPassword
   )
 
   if (regResult) {
@@ -53,7 +62,6 @@ async function registerAccount(req, res) {
     res.status(201).render("account/login", {
       title: "Login",
       nav,
-      grid,
       errors: null
     })
   } else {
@@ -61,7 +69,6 @@ async function registerAccount(req, res) {
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
-      form,
       errors: null
     })
   }

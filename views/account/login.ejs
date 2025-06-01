@@ -6,4 +6,23 @@
     
 <%- messages() %>
     
-<%- grid %>
+<form class="login-form" action="/account/login" method="post">
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="account_email" required
+        value="<%= locals.account_email %>">
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="account_password" required
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        >
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="login-btn">LOGIN</button>
+    </div>
+
+    <p class="signup-text">No account? <a href="/account/register">Sign-up</a></p>
+</form>
