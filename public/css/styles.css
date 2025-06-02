@@ -15,6 +15,8 @@
   --blue-color: #037eaa;
   --dark-blue-color: #0a0ecc;
   --red-color: #e2490d;
+  --light-red-color: #f8d7da;
+  --light-green-color: #d4edda;
 }
 
 body, main {
@@ -344,18 +346,42 @@ nav ul li:hover {
   font-weight: 700;
 }
 
-.form-group input {
+.form-group input,
+.form-group select,
+.form-group textarea {
   height: 40px;
   padding: 6px 10px;
   border: 2px solid var(--black-color);
   border-radius: 2px;
   outline: none;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.form-group input:focus {
-  border-color: var(--light-black-color);
+.form-group textarea {
+  height: 100px;
+  line-height: 1.4;
+  resize: none; 
 }
 
+.form-group input:focus:invalid,
+.form-group select:focus:invalid,
+.form-group textarea:focus:invalid,
+.form-group input:focus-within:invalid,
+.form-group select:focus-within:invalid,
+.form-group textarea:focus-within:invalid {
+  background-color: var(--light-red-color);
+}
+
+.form-group input:focus:valid,
+.form-group select:focus:valid,
+.form-group textarea:focus:valid,
+.form-group input:focus-within:valid,
+.form-group select:focus-within:valid,
+.form-group textarea:focus-within:valid {
+  background-color: var(--light-green-color);
+}
 .register-btn {
   width: 30%;
   padding: .9rem;

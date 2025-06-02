@@ -68,7 +68,6 @@ invCont.buildNewClassification = async function (req, res, next) {
 * *************************************** */
 invCont.addNewClassification = async function (req, res) {
   let nav = await utilities.getNav()
-  const grid = await utilities.buildManagement()
   const { classification_name } = req.body
 
   const regResult = await invModel.addNewClassification(classification_name)
@@ -78,14 +77,67 @@ invCont.addNewClassification = async function (req, res) {
       "notice",
       `The ${classification_name} classification was successfully added.`
     )
-    // Redirect to the management route — this changes the URL in the browser
+
     return res.redirect("/inv")
   } else {
     req.flash("notice", "Sorry, the registration failed.")
-    // Stay on the classification form page on error
+
     return res.status(501).render("./inventory/add-classification", {
       title: "Add New Classification",
       nav,
+      errors: null
+    })
+  }
+}
+
+/* ***************************
+ *  Build new vehicle view
+ * ************************** */
+invCont.buildNewVehicle = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const classificationList = await utilities.buildClassificationList()
+  res.render("./inventory/add-inventory", {
+    title: "Add New Vehicle",
+    nav,
+    classificationList,
+    errors: null
+  })
+}
+
+/* ****************************************
+*  Process New Vehicle
+* *************************************** */
+invCont.addNewVehicle = async function (req, res) {
+  let nav = await utilities.getNav()
+  const classificationList = await utilities.buildClassificationList()
+  const { inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id } = req.body
+
+  const regResult = await invModel.addNewVehicle(
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_miles, 
+    inv_color, 
+    classification_id
+  )
+
+  if (regResult) {
+    req.flash(
+      "notice",
+      `The ${inv_make} ${inv_model} was successfully added.`
+    )
+    return res.redirect("/inv")
+  } else {
+    req.flash("notice", "Sorry, the registration failed.")
+
+    return res.status(501).render("./inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      classificationList,
       errors: null
     })
   }

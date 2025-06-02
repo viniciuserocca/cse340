@@ -4,6 +4,7 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
 const classificationValidation = require('../utilities/newClassification-validation')
+const vehicleValidation = require('../utilities/newVehicle-validation')
 
 router.get(
   "/type/:classificationId", 
@@ -30,7 +31,6 @@ router.get(
   utilities.handleErrors(invController.buildNewClassification)
 );
 
-// Process the registration data
 router.post(
   "/newClassification",
   classificationValidation.classificationRules(),
@@ -38,5 +38,16 @@ router.post(
   utilities.handleErrors(invController.addNewClassification)
 );
 
+router.get(
+  "/newVehicle",
+  utilities.handleErrors(invController.buildNewVehicle)
+);
+
+router.post(
+  "/newVehicle",
+  vehicleValidation.inventoryRules(),
+  vehicleValidation.checkInventoryData,
+  utilities.handleErrors(invController.addNewVehicle)
+);
 
 module.exports = router;

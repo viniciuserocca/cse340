@@ -47,7 +47,7 @@ async function getItemDetails(invetory_id) {
 
 async function checkExistingClassification(classification_name) {
   try {
-    const sql = "SELECT * FROM classification WHERE LOWER(classification_name) = LOWER($1)"
+    const sql = "SELECT * FROM public.classification WHERE LOWER(classification_name) = LOWER($1)"
     const result = await pool.query(sql, [classification_name])
     return result.rowCount > 0
   } catch (error) {
@@ -69,10 +69,56 @@ async function addNewClassification(classification_name) {
   }
 }
 
+async function checkExistingVehicle(inv_make, inv_model, inv_year) {
+  try {
+    const sql = `SELECT * FROM public.inventory 
+      WHERE LOWER(inv_make) = LOWER($1) 
+      AND LOWER(inv_model) = LOWER($2) 
+      AND inv_year = $3`
+
+    const result = await pool.query(sql, [
+      inv_make, 
+      inv_model, 
+      inv_year
+    ])
+
+    return result.rowCount > 0
+  } catch (error) {
+    console.error("checkExistingVehicle error", error)
+    return false
+  }
+}
+
+async function addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) {
+  try {
+    const sql =`INSERT INTO public.inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
+
+    return await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image, 
+      inv_thumbnail, 
+      inv_price, 
+      inv_miles, 
+      inv_color, 
+      classification_id
+  ])
+
+  } catch (error) {
+    console.error("addNewVehicle error " + error)
+    return null
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
   getItemDetails,
   addNewClassification,
-  checkExistingClassification
+  checkExistingClassification,
+  addNewVehicle,
+  checkExistingVehicle
 }
