@@ -1,7 +1,6 @@
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
 const validate = {}
-const invModel = require("../models/inventory-model")
 
 validate.inventoryRules = () => {
   return [
@@ -14,17 +13,7 @@ validate.inventoryRules = () => {
       .isLength({ min: 3 })
       .withMessage("Make must be at least 3 characters long.")
       .matches(/^[A-Za-z0-9\s]+$/)
-      .withMessage("Make can only contain letters, numbers, and spaces.")
-      .custom(async (value, { req }) => {
-        const exists = await invModel.checkExistingInventory(
-          value,
-          req.body.inv_model,
-          req.body.inv_year
-        )
-        if (exists) {
-          throw new Error("That vehicle already exists.")
-        }
-      }),
+      .withMessage("Make can only contain letters, numbers, and spaces."),
 
     body("inv_model")
       .trim()
@@ -113,5 +102,49 @@ validate.checkInventoryData = async (req, res, next) => {
   next()
 }
 
+
+// Check Update Data
+validate.checkUpdateData = async (req, res, next) => {
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body
+
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    const classificationList = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    res.render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      errors,
+      classificationList,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    })
+    return
+  }
+
+  next()
+}
 
 module.exports = validate

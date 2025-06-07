@@ -3,8 +3,8 @@ const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
-const classificationValidation = require('../utilities/newClassification-validation')
-const inventoryValidation = require('../utilities/newInventory-validation')
+const classificationValidation = require('../utilities/classification-validation')
+const inventoryValidation = require('../utilities/inventory-validation')
 
 router.get(
   "/type/:classificationId", 
@@ -61,6 +61,12 @@ router.post(
 router.get(
   "/edit/:invId",
   utilities.handleErrors(invController.editInventoryView)
+);
+
+router.post("/update/",
+  inventoryValidation.inventoryRules(),
+  inventoryValidation.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
 );
 
 module.exports = router;

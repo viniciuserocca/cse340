@@ -73,10 +73,7 @@ invCont.addNewClassification = async function (req, res) {
   const regResult = await invModel.addNewClassification(classification_name)
 
   if (regResult) {
-    req.flash(
-      "notice",
-      `The ${classification_name} classification was successfully added.`
-    )
+    req.flash("notice",`The ${classification_name} classification was successfully added.`)
 
     return res.redirect("/inv")
   } else {
@@ -126,10 +123,7 @@ invCont.addNewInventory = async function (req, res) {
   )
 
   if (regResult) {
-    req.flash(
-      "notice",
-      `The ${inv_make} ${inv_model} was successfully added.`
-    )
+    req.flash("notice", `The ${inv_make} ${inv_model} was successfully added.`)
     return res.redirect("/inv")
   } else {
     req.flash("notice", "Sorry, the registration failed.")
@@ -142,14 +136,6 @@ invCont.addNewInventory = async function (req, res) {
     })
   }
 }
-
-invCont.triggerError = async (req, res, next) => {
-  try {
-    throw new Error("Intentional server error triggered for testing.");
-  } catch (err) {
-    next(err);
-  }
-};
 
 /* ***************************
  *  Return Inventory by Classification As JSON
@@ -191,5 +177,75 @@ invCont.editInventoryView = async function (req, res, next) {
     classification_id: itemData.classification_id
   })
 }
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.updateInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body
+  const updateResult = await invModel.updateInventory(
+    inv_id,  
+    inv_make,
+    inv_model,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_year,
+    inv_miles,
+    inv_color,
+    classification_id
+  )
+
+  if (updateResult) {
+    const itemName = updateResult.inv_make + " " + updateResult.inv_model
+    req.flash("notice", `The ${itemName} was successfully updated.`)
+    //console.log("DEBUG CONTROLLER: Session state AFTER req.flash():", JSON.stringify(req.session, null, 2));
+    //console.log("DEBUG CONTROLLER: Flash messages AFTER req.flash():", JSON.stringify(req.session.flash, null, 2));
+    return res.redirect("/inv")
+  } else {
+    const classificationList = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the insert failed.")
+    res.status(501).render("inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    classificationList: classificationList,
+    errors: null,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+    })
+  }
+}
+
+invCont.triggerError = async (req, res, next) => {
+  try {
+    throw new Error("Intentional server error triggered for testing.");
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = invCont
