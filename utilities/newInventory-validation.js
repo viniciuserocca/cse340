@@ -16,7 +16,7 @@ validate.inventoryRules = () => {
       .matches(/^[A-Za-z0-9\s]+$/)
       .withMessage("Make can only contain letters, numbers, and spaces.")
       .custom(async (value, { req }) => {
-        const exists = await invModel.checkExistingVehicle(
+        const exists = await invModel.checkExistingInventory(
           value,
           req.body.inv_model,
           req.body.inv_year

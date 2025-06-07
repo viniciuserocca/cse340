@@ -383,6 +383,7 @@ nav ul li:hover {
   background-color: var(--light-green-color);
 }
 .register-btn {
+  white-space: nowrap;
   width: 30%;
   padding: .9rem;
   background-color: var(--blue-color);

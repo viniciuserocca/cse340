@@ -28,12 +28,12 @@ async function getInventoryByClassificationId(classification_id) {
 /* ***************************
  *  Get specific inventory item details
  * ************************** */
-async function getItemDetails(invetory_id) {
+async function getItemDetails(inv_id) {
   try {
     const data = await pool.query(
       `SELECT * FROM public.inventory
       WHERE inv_id = $1`,
-      [invetory_id]
+      [inv_id]
     )
     return data.rows[0]
   } catch (error) {
@@ -69,7 +69,7 @@ async function addNewClassification(classification_name) {
   }
 }
 
-async function checkExistingVehicle(inv_make, inv_model, inv_year) {
+async function checkExistingInventory(inv_make, inv_model, inv_year) {
   try {
     const sql = `SELECT * FROM public.inventory 
       WHERE LOWER(inv_make) = LOWER($1) 
@@ -84,12 +84,12 @@ async function checkExistingVehicle(inv_make, inv_model, inv_year) {
 
     return result.rowCount > 0
   } catch (error) {
-    console.error("checkExistingVehicle error", error)
+    console.error("checkExistingInventory error", error)
     return false
   }
 }
 
-async function addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) {
+async function addNewInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) {
   try {
     const sql =`INSERT INTO public.inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) 
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
@@ -108,7 +108,7 @@ async function addNewVehicle(inv_make, inv_model, inv_year, inv_description, inv
   ])
 
   } catch (error) {
-    console.error("addNewVehicle error " + error)
+    console.error("addNewInventory error " + error)
     return null
   }
 }
@@ -119,6 +119,6 @@ module.exports = {
   getItemDetails,
   addNewClassification,
   checkExistingClassification,
-  addNewVehicle,
-  checkExistingVehicle
+  addNewInventory,
+  checkExistingInventory
 }
