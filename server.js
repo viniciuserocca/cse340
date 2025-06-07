@@ -49,11 +49,6 @@ app.use(utilities.checkJWTToken)
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
-
-  //console.log("DEBUG SERVER (express-messages): Session state at start of /inv request:", JSON.stringify(req.session, null, 2));
-  //console.log("DEBUG SERVER (express-messages): Flash messages at start of /inv request:", JSON.stringify(req.session.flash, null, 2));
-  //console.log("DEBUG SERVER (express-messages): res.locals.messages content:", res.locals.messages().toString());
-
   next()
 })
 

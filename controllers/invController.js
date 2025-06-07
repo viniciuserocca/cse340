@@ -213,8 +213,6 @@ invCont.updateInventory = async function (req, res, next) {
   if (updateResult) {
     const itemName = updateResult.inv_make + " " + updateResult.inv_model
     req.flash("notice", `The ${itemName} was successfully updated.`)
-    //console.log("DEBUG CONTROLLER: Session state AFTER req.flash():", JSON.stringify(req.session, null, 2));
-    //console.log("DEBUG CONTROLLER: Flash messages AFTER req.flash():", JSON.stringify(req.session.flash, null, 2));
     return res.redirect("/inv")
   } else {
     const classificationList = await utilities.buildClassificationList(classification_id)
@@ -236,6 +234,66 @@ invCont.updateInventory = async function (req, res, next) {
     inv_miles,
     inv_color,
     classification_id
+    })
+  }
+}
+
+/* ***************************
+ *  Build delete inventory view
+ * ************************** */
+invCont.deleteInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.invId)
+  let nav = await utilities.getNav()
+  const itemData = await invModel.getItemDetails(inv_id)
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+  })
+}
+
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_price,
+    inv_year
+  } = req.body
+  const deleteResult = await invModel.deleteInventory(
+    inv_id,  
+    inv_make,
+    inv_model,
+    inv_price,
+    inv_year
+  )
+
+  if (deleteResult) {
+    const itemName = deleteResult.inv_make + " " + deleteResult.inv_model
+    req.flash("notice", `The deletion was successful.`)
+    return res.redirect("/inv")
+  } else {
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the deletion failed.")
+    res.status(501).render("inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_price,
     })
   }
 }
