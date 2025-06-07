@@ -27,6 +27,11 @@ router.get(
 );
 
 router.get(
+  "/getInventory/:classification_id", 
+  utilities.handleErrors(invController.getInventoryJSON)
+)
+
+router.get(
   "/newClassification",
   utilities.handleErrors(invController.buildNewClassification)
 );

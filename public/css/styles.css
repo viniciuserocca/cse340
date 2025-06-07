@@ -407,6 +407,19 @@ nav ul li:hover {
   padding: 2rem;
 }
 
+.management-container #classificationList {
+  width: 200px;
+  margin: 2rem 0;
+}
+
+#inventoryDisplay {
+  width: 300px;
+}
+
+#inventoryDisplay tr th{
+  text-align: left;
+}
+
 /*************** Queries ***************/
 
 @media (min-width: 550px) {

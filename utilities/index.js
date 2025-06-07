@@ -92,19 +92,6 @@ Util.buildDetailsGrid = async function(data) {
 }
 
 /* **************************************
-* Build the management view HTML
-* ************************************ */
-Util.buildManagement = async function () {
-  let grid = `
-    <div class="management-container">
-      <a href="/inv/newClassification" title="New Classification">Add New Classification</a>
-      <a href="/inv/newVehicle" title="New Inventory">Add New Vehicle</a>
-    </div>
-  `;
-  return grid;
-};
-
-/* **************************************
 * Build the select list for the new vehicle view HTML
 * ************************************ */
 Util.buildClassificationList = async function (classification_id = null) {
