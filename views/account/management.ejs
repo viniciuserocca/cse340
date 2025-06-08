@@ -5,5 +5,17 @@
 } %>
     
 <%- messages() %>
-    
-<span>You're logged in.</span>
+
+<div class="account-container">
+    <h2>Welcome <%= locals.accountData.account_firstname %></h2>
+
+    <p>You're logged in.</p>
+
+    <a href="/account/update/<%= locals.accountData.account_id %>"  >Edit Account Information</a>
+
+    <% if (locals.accountData.account_type == "Employee" || locals.accountData.account_type == "Admin") 
+    { %>
+        <h3>Inventory Management</h3>
+        <a href="/inv/">Manage Inventory</a>
+    <% } %>
+</div>

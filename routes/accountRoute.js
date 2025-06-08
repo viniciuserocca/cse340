@@ -5,11 +5,42 @@ const utilities = require("../utilities/")
 const accountController = require("../controllers/accountController")
 const regValidate = require('../utilities/account-validation')
 
-router.get("/login", utilities.handleErrors(accountController.buildLogin));
-router.get("/register", utilities.handleErrors(accountController.buildRegister));
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement));
 
-// Process the registration data
+/* ***************************
+ *  Default GET
+ * ************************** */
+router.get("/", 
+  utilities.checkLogin, 
+  utilities.handleErrors(accountController.buildAccountManagement)
+);
+
+/* ***************************
+ *  Login GET and POST
+ * ************************** */
+router.get("/login", 
+  utilities.handleErrors(accountController.buildLogin)
+);
+
+router.post("/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+)
+
+/* ***************************
+ *  Logout GET
+ * ************************** */
+router.get("/logout", 
+  utilities.handleErrors(accountController.accountLogout)
+);
+
+/* ***************************
+ *  Register GET and POST
+ * ************************** */
+router.get("/register", 
+  utilities.handleErrors(accountController.buildRegister)
+);
+
 router.post(
   "/register",
   regValidate.registationRules(),
@@ -17,12 +48,23 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 );
 
-// Process the login request
-router.post(
-  "/login",
-  regValidate.loginRules(),
-  regValidate.checkLoginData,
-  utilities.handleErrors(accountController.accountLogin)
-)
+/* ***************************
+ *  Update GET and POST
+ * ************************** */
+router.get("/update/:accountId", 
+  utilities.handleErrors(accountController.buildAccountUpdate)
+);
+
+router.post("/update/:accountId",
+  regValidate.updateInfoRules(),
+  regValidate.checkUpdateData,
+  utilities.handleErrors(accountController.updateAccountInfo)
+);
+
+router.post("/password",
+  regValidate.updatePasswordRules(),
+  regValidate.checkUpdatePassword,
+  utilities.handleErrors(accountController.updateAccountPassword)
+);
 
 module.exports = router;

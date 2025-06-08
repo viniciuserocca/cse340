@@ -6,6 +6,12 @@
     
 <%- messages() %>
 
+<%# if (messages && messages.notice) { %>
+  <!--
+  <div class="notice"><%#= messages.notice %></div>
+  -->
+<%# } %>
+
 <% if (errors) { %>
   <ul class="notice">
     <% errors.array().forEach(error => { 

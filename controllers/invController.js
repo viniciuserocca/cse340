@@ -74,11 +74,11 @@ invCont.addNewClassification = async function (req, res) {
 
   if (regResult) {
     req.flash("notice",`The ${classification_name} classification was successfully added.`)
-
+    req.session.save(() => {
     return res.redirect("/inv")
+    });
   } else {
     req.flash("notice", "Sorry, the registration failed.")
-
     return res.status(501).render("./inventory/add-classification", {
       title: "Add New Classification",
       nav,
@@ -124,7 +124,9 @@ invCont.addNewInventory = async function (req, res) {
 
   if (regResult) {
     req.flash("notice", `The ${inv_make} ${inv_model} was successfully added.`)
+    req.session.save(() => {
     return res.redirect("/inv")
+    });
   } else {
     req.flash("notice", "Sorry, the registration failed.")
 
@@ -213,7 +215,9 @@ invCont.updateInventory = async function (req, res, next) {
   if (updateResult) {
     const itemName = updateResult.inv_make + " " + updateResult.inv_model
     req.flash("notice", `The ${itemName} was successfully updated.`)
+    req.session.save(() => {
     return res.redirect("/inv")
+    });
   } else {
     const classificationList = await utilities.buildClassificationList(classification_id)
     const itemName = `${inv_make} ${inv_model}`
@@ -281,7 +285,9 @@ invCont.deleteInventory = async function (req, res, next) {
   if (deleteResult) {
     const itemName = deleteResult.inv_make + " " + deleteResult.inv_model
     req.flash("notice", `The deletion was successful.`)
+    req.session.save(() => {
     return res.redirect("/inv")
+    });
   } else {
     const itemName = `${inv_make} ${inv_model}`
     req.flash("notice", "Sorry, the deletion failed.")

@@ -132,7 +132,9 @@ Util.checkJWTToken = (req, res, next) => {
     if (err) {
      req.flash("Please log in")
      res.clearCookie("jwt")
+     req.session.save(() => {
      return res.redirect("/account/login")
+     });
     }
     res.locals.accountData = accountData
     res.locals.loggedin = 1
@@ -151,7 +153,23 @@ Util.checkJWTToken = (req, res, next) => {
     next()
   } else {
     req.flash("notice", "Please log in.")
+    req.session.save(() => {
     return res.redirect("/account/login")
+    });
+  }
+ }
+
+ /* ****************************************
+ *  Check Permissions
+ * ************************************ */
+ Util.checkPermission = (req, res, next) => {
+  if (res.locals.accountData.account_type == "Employee" || res.locals.accountData.account_type == "Admin" ) {
+    next()
+  } else {
+    req.flash("notice", "You are not authorized to enter this page.")
+    req.session.save(() => {
+    return res.redirect("/account/")
+    });
   }
  }
 

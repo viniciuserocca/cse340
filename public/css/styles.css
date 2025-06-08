@@ -382,7 +382,9 @@ nav ul li:hover {
 .form-group textarea:focus-within:valid {
   background-color: var(--light-green-color);
 }
-.register-btn {
+.register-btn,
+.password-btn
+{
   white-space: nowrap;
   width: 30%;
   padding: .9rem;
@@ -396,11 +398,31 @@ nav ul li:hover {
   transition: background-color 0.3s ease;
 }
 
-.register-btn:hover {
+.password-btn {
+  width: 70%;
+}
+
+.register-btn:hover,
+.password-btn:hover
+{
   background-color: var(--blue-color);
 }
 
-/*************** Management ***************/
+/*************** Inventory Management ***************/
+
+.account-container p {
+  padding: 1rem 10px;
+}
+
+.account-container a {
+  padding-left: 10px;
+}
+
+.account-container h3 {
+  padding-top: 2rem;
+}
+
+/*************** Inventory Management ***************/
 
 .management-container {
   display: flex;
@@ -444,10 +466,14 @@ nav ul li:hover {
     grid-template-rows: 1fr 1fr;
   }
 
-  .login-form, 
+  .login-form,
   .register-form
   {
-  width: 500px;
+    width: 500px;
+  }
+
+  .password-btn {
+    width: 40%;
   }
 }
 

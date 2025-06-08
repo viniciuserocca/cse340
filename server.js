@@ -24,7 +24,7 @@ const cookieParser = require("cookie-parser")
  *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
-app.set("layout", "./layouts/layout") // not at views root
+app.set("layout", "./layouts/layout")
 
 /* ***********************
  * Middleware
@@ -35,8 +35,8 @@ app.use(session({
     pool,
   }),
   secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
+  resave: false,
+  saveUninitialized: false,
   name: 'sessionId',
 }))
 
