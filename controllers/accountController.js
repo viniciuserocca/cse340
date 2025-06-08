@@ -170,7 +170,7 @@ async function updateAccountInfo(req, res, next) {
   )
 
   if (updateResult) {
-    req.flash("notice", `Congratulations, your information has been updated.`)
+    req.flash("success", `Congratulations, your information has been updated.`)
     req.session.save(() => {
     return res.redirect("/account")
     });
@@ -219,7 +219,7 @@ async function updateAccountPassword(req, res, next) {
   )
 
   if (updateResult) {
-    req.flash("notice", `Congratulations, your password has been updated.`)
+    req.flash("success", `Congratulations, your password has been updated.`)
     req.session.save(() => {
     return res.redirect("/account")
     });

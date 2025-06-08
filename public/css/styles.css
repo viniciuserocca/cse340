@@ -16,6 +16,7 @@
   --dark-blue-color: #0a0ecc;
   --red-color: #e2490d;
   --light-red-color: #f8d7da;
+  --green-color: #86f5a0;
   --light-green-color: #d4edda;
 }
 
@@ -93,6 +94,14 @@ nav ul li:hover {
 .notice {
   font-weight: 700;
   color: var(--red-color);
+  margin-left: 1rem;
+}
+
+.success {
+  list-style-type: none;
+  font-weight: 700;
+  color: var(--black-color);
+  background-color: var(--green-color);
   margin-left: 1rem;
 }
 
@@ -382,11 +391,12 @@ nav ul li:hover {
 .form-group textarea:focus-within:valid {
   background-color: var(--light-green-color);
 }
+.update-btn,
 .register-btn,
 .password-btn
 {
   white-space: nowrap;
-  width: 30%;
+  width: 40%;
   padding: .9rem;
   background-color: var(--blue-color);
   color: var(--white-color);
@@ -398,6 +408,7 @@ nav ul li:hover {
   transition: background-color 0.3s ease;
 }
 
+.update-btn,
 .password-btn {
   width: 70%;
 }
@@ -471,7 +482,8 @@ nav ul li:hover {
   {
     width: 500px;
   }
-
+  
+  .update-btn,
   .password-btn {
     width: 40%;
   }
