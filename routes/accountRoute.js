@@ -53,7 +53,6 @@ router.post(
  * ************************** */
 router.get("/update/:accountId", 
   utilities.checkLogin,
-  utilities.checkPermission,
   utilities.handleErrors(accountController.buildAccountUpdate)
 );
 
