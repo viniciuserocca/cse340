@@ -15,7 +15,7 @@
   </ul>
 <% } %>
     
-<form class="register-form" id="updateForm" action="/inv/edit" method="post">
+<form class="edit-form" id="updateForm" action="/inv/edit" method="post">
   <div class="form-group">
     <label for="classificationList">Classification*</label>
     <%- classificationList %>
@@ -86,7 +86,7 @@
   </div>
 
   <div class="form-group">
-    <button type="submit" class="update-btn" disabled>Update Vehicle</button>
+    <button type="submit" class="edit-btn" disabled>Update Vehicle</button>
 
     <input type="hidden" name="inv_id"
     <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"

@@ -270,7 +270,9 @@ nav ul li:hover {
 
 /*************** Login ***************/
 
-.login-form {
+.classification-form,
+.login-form 
+{
   width: 300px;
   margin: 50px auto;
   padding: 30px;
@@ -284,12 +286,15 @@ nav ul li:hover {
   margin-bottom: 20px;
 }
 
-.login-form label {
+.classification-form label,
+.login-form label 
+{
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
+.classification-form input[type="text"],
 .login-form input[type="email"],
 .login-form input[type="password"] {
   width: 100%;
@@ -299,6 +304,7 @@ nav ul li:hover {
   box-sizing: border-box;
 }
 
+.classification-btn,
 .login-btn {
   width: 100%;
   padding: 10px;
@@ -311,6 +317,7 @@ nav ul li:hover {
   transition: background-color 0.3s ease;
 }
 
+.classification-btn:hover,
 .login-btn:hover {
   background-color: var(--white-color);
 }
@@ -329,7 +336,12 @@ nav ul li:hover {
 
 /*************** Register ***************/
 
-.register-form {
+.update-form,
+.inventory-form,
+.delete-form,
+.edit-form,
+.register-form 
+{
   width: 300px;
   margin: 50px auto;
   border: 2px solid var(--black-color);
@@ -338,7 +350,12 @@ nav ul li:hover {
   font-family: Arial, sans-serif;
 }
 
-.register-form h2 {
+.update-form h2,
+.inventory-form h2,
+.delete-form h2,
+.edit-form h2,
+.register-form h2 
+{
   padding: .5rem 0 0 .5rem;
   margin-bottom: 20px;
   font-weight: bold;
@@ -391,8 +408,12 @@ nav ul li:hover {
 .form-group textarea:focus-within:valid {
   background-color: var(--light-green-color);
 }
+
+.edit-btn,
 .update-btn,
 .register-btn,
+.delete-btn,
+.inventory-btn,
 .password-btn
 {
   white-space: nowrap;
@@ -408,12 +429,14 @@ nav ul li:hover {
   transition: background-color 0.3s ease;
 }
 
-.update-btn,
+.edit-btn,
 .password-btn {
   width: 70%;
 }
 
 .register-btn:hover,
+.delete-btn,
+.inventory-btn:hover,
 .password-btn:hover
 {
   background-color: var(--blue-color);
@@ -478,12 +501,17 @@ nav ul li:hover {
   }
 
   .login-form,
-  .register-form
+  .classification-form,
+  .register-form,
+  .edit-form,
+  .delete-form,
+  .inventory-form,
+  .update-form
   {
     width: 500px;
   }
   
-  .update-btn,
+  .edit-btn,
   .password-btn {
     width: 40%;
   }
