@@ -206,15 +206,4 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
-  Util.checkMasterPermission = (req, res, next) => {
-  if (res.locals.accountData.account_type == "Admin" ) {
-    next()
-  } else {
-    req.flash("notice", "You are not authorized to enter this page. Talk to an Admin")
-    req.session.save(() => {
-    return res.redirect("/account/")
-    });
-  }
- }
-
 module.exports = Util
