@@ -42,6 +42,22 @@ async function getItemDetails(inv_id) {
 }
 
 /* ***************************
+ *  Get specific classification item details
+ * ************************** */
+async function getClassificationDetails(classification_id) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM classification
+      WHERE classification_id = $1`,
+      [classification_id]
+    )
+    return data.rows[0]
+  } catch (error) {
+    console.error("getClassificationDetails error " + error)
+  }
+}
+
+/* ***************************
  *  New Classification Validation and INSERT
  * ************************** */
 
@@ -133,6 +149,50 @@ async function updateInventory(inv_id, inv_make, inv_model, inv_description, inv
   }
 }
 
+/* ***************************
+ *  Update Inventory Data
+ * ************************** */
+async function updateClassification(classification_name, classification_id) {
+  try {
+    const sql = `UPDATE classification SET classification_name = $1 WHERE classification_id = $2 RETURNING *`
+    
+    const data = await pool.query(sql, [
+      classification_name,
+      classification_id
+    ])
+
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
+  }
+}
+
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+ async function deleteClassification(classification_id) {
+  try {
+    const sql = 'DELETE FROM classification WHERE classification_id = $1'
+    const data = await pool.query(sql, [classification_id])
+  return data
+  } catch (error) {
+    new Error("Delete Classification Error")
+  }
+}
+
+async function checkExistingInventory(classification_id) {
+  try {
+    const data = await pool.query(
+      `SELECT 1 FROM inventory WHERE classification_id = $1 LIMIT 1`,
+      [classification_id]
+    )
+    return data.rows.length > 0
+  } catch (error) {
+    console.error("checkExistingInventory error: " + error)
+    throw error
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
@@ -141,5 +201,9 @@ module.exports = {
   checkExistingClassification,
   addNewInventory,
   updateInventory,
-  deleteInventory
+  deleteInventory,
+  getClassificationDetails,
+  updateClassification,
+  deleteClassification,
+  checkExistingInventory
 }

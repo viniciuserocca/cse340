@@ -111,7 +111,40 @@ Util.buildClassificationList = async function (classification_id = null) {
     })
     classificationList += "</select>"
     return classificationList
-  }
+}
+
+/* **************************************
+* Build the classification table for the new classification manage view HTML
+* ************************************ */
+
+Util.buildManageClassification = async function () {
+  let data = await invModel.getClassifications()
+  let classificationTable = `
+    <table>
+      <thead>
+        <tr>
+          <th>Classification</th>
+        </tr>
+      </thead>
+      <tbody>
+  `
+
+  data.rows.forEach((row) => {
+    classificationTable += `
+      <tr>
+        <td>${row.classification_name}</td>
+        <td><a href="/inv/editClassification/${row.classification_id}">Edit</a></td>
+        <td><a href="/inv/deleteClassification/${row.classification_id}">Delete</a></td>
+      </tr>
+    `
+  })
+
+  classificationTable += `
+      </tbody>
+    </table>
+  `
+  return classificationTable
+}
 
 /* ****************************************
  * Middleware For Handling Errors
@@ -167,6 +200,17 @@ Util.checkJWTToken = (req, res, next) => {
     next()
   } else {
     req.flash("notice", "You are not authorized to enter this page.")
+    req.session.save(() => {
+    return res.redirect("/account/")
+    });
+  }
+ }
+
+  Util.checkMasterPermission = (req, res, next) => {
+  if (res.locals.accountData.account_type == "Admin" ) {
+    next()
+  } else {
+    req.flash("notice", "You are not authorized to enter this page. Talk to an Admin")
     req.session.save(() => {
     return res.redirect("/account/")
     });

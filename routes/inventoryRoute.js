@@ -69,6 +69,51 @@ router.post(
 );
 
 /* ***************************
+ *  Manage Classification GET
+ * ************************** */
+
+router.get(
+  "/manageClassification", 
+  utilities.handleErrors(invController.buildManageClassification)
+)
+
+/* ***************************
+ *  Edit Classification GET and POST
+ * ************************** */
+router.get(
+  "/editClassification/:classificationId",
+  utilities.checkLogin,
+  utilities.checkPermission,
+  utilities.handleErrors(invController.editClassificationView)
+);
+
+router.post("/editClassification",
+  utilities.checkLogin,
+  utilities.checkPermission,
+  classificationValidation.classificationRules(),
+  classificationValidation.checkUpdateClassificationData,
+  utilities.handleErrors(invController.updateClassification)
+);
+
+/* ***************************
+ *  Delete Classification GET and POST
+ * ************************** */
+router.get(
+  "/deleteClassification/:classificationId",
+  utilities.checkLogin,
+  utilities.checkPermission,
+  utilities.handleErrors(invController.deleteClassificationView)
+);
+
+router.post("/deleteClassification",
+  utilities.checkLogin,
+  utilities.checkPermission,
+  classificationValidation.classificationDeleteRules(),
+  classificationValidation.checkDeleteClassificationData,
+  utilities.handleErrors(invController.deleteClassification)
+);
+
+/* ***************************
  *  New Inventory GET and POST
  * ************************** */
 router.get(

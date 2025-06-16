@@ -57,12 +57,14 @@ router.get("/update/:accountId",
 );
 
 router.post("/update/:accountId",
+  utilities.checkLogin,
   regValidate.updateInfoRules(),
   regValidate.checkUpdateData,
   utilities.handleErrors(accountController.updateAccountInfo)
 );
 
 router.post("/password",
+  utilities.checkLogin,
   regValidate.updatePasswordRules(),
   regValidate.checkUpdatePassword,
   utilities.handleErrors(accountController.updateAccountPassword)
