@@ -73,7 +73,9 @@ router.post(
  * ************************** */
 
 router.get(
-  "/manageClassification", 
+  "/manageClassification",
+  utilities.checkLogin,
+  utilities.checkPermission,
   utilities.handleErrors(invController.buildManageClassification)
 )
 
